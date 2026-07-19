@@ -3,7 +3,7 @@
 No Windows dependencies. No Wine-side bridge. No named-pipe symlinks. One 603 KB binary that reads game state directly from the Wine process and speaks Discord's IPC protocol over the Linux Unix socket. First tool of its kind for Linux.  
 ***This project is a Linux-native port and rewrite of ***[ ***TouhouRPC by TheBakaRem*** ***.*** * Memory addresses, boss and stage tables, state-machine logic, and Discord application IDs (which supply the cover art) all come from their reverse-engineering work. This project would not exist without theirs. As a derivative work under GPL v3, * *touhou-rpc-for-linux* * is also GPL v3. See *](https://github.com/TheBakaRem/TouhouRPC "https://github.com/TheBakaRem/TouhouRPC")[ *NOTICE* * for a precise breakdown of what was derived and what is original.*](NOTICE "NOTICE")  
 **Supported games**  
-Detection and presence — all games below show up on Discord with cover art:  
+Detection and presence -all games below show up on Discord with cover art:  
 | | | |  
 |-|-|-|  
 | **#** | **Title** | **Depth** |   
@@ -12,7 +12,7 @@ Detection and presence — all games below show up on Discord with cover art:
 | 8 | Imperishable Night | Full (incl. team detection, stage 4A/4B/6A/6B branches) |   
 | 9 | Phantasmagoria of Flower View | Detection + character |   
 | 9.5 | Shoot the Bullet | Detection only |   
-| 10 | Mountain of Faith | Detection only (needs BGM-string parsing — TODO) |   
+| 10 | Mountain of Faith | Detection only (needs BGM-string parsing - TODO) |   
 | 11 | Subterranean Animism | Detection only (same reason) |   
 | 12 | Undefined Fantastic Object | Full |   
 | 12.5 | Double Spoiler | Detection only |   
@@ -25,7 +25,7 @@ Detection and presence — all games below show up on Discord with cover art:
 | 17 | Wily Beast and Weakest Creature | Full (incl. beast) |   
 | 18 | Unconnected Marketeers | Full (incl. money counter) |   
    
-**Not supported:** the fighters (10.5, 12.3, 13.5, 14.5, 15.5, 17.5), Violet Detector (16.5), and TH19 — no publicly-reverse-engineered memory maps exist for these.  
+**Not supported:** the fighters (10.5, 12.3, 13.5, 14.5, 15.5, 17.5), Violet Detector (16.5), and TH19 -no publicly-reverse-engineered memory maps exist for these.  
 **Full = ** character, difficulty, stage, lives, bombs, score plus a boss name when you're fighting one.  
 **Detection only = ** shows "Playing Touhou N Title" with cover art but no gameplay details. A v0.2 pass will fill these in.  
 **Build & run**  
@@ -35,7 +35,7 @@ sudo apt install rustc cargo   
    
 Launch order doesn't matter. Start the daemon, start Discord, launch any Touhou game under Wine or Proton. Presence updates within 5 seconds. Ctrl-C clears it.  
 **How it works**  
-1. **Process scan.**/proc/<pid>/comm and /cmdline are checked against every known Touhou exe basename (ASCII *and* the original Japanese release names — 東方紅魔郷.exe, 東方妖々夢.exe, etc.). First match wins.  
+1. **Process scan.**/proc/<pid>/comm and /cmdline are checked against every known Touhou exe basename (ASCII *and* the original Japanese release names - 東方紅魔郷.exe, 東方妖々夢.exe, etc.). First match wins.  
 2. **Memory reads.**process_vm_readv(2) first, falling back to /proc/<pid>/mem if Yama denies the syscall. Touhou is 32-bit; Wine maps the PE at its preferred base, so the Windows-documented static addresses are valid inside the Wine process.  
 3. **Per-game state extraction.** Each game has its own reader in src/games.rs with the correct address table and boss/stage tables (ported from TouhouRPC).  
 4. **Discord IPC.** Length-prefixed frames over $XDG_RUNTIME_DIR/discord-ipc-{0..9} (plus Flatpak and Snap paths). One Discord app per game, so the daemon reconnects with a new client_id whenever you switch games.  
