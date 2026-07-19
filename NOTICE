@@ -1,0 +1,41 @@
+touhou-rpc-for-linux
+==========
+
+This program is a derivative work of TouhouRPC by TheBakaRem, licensed
+under the GNU General Public License version 3 or later.
+
+Original project:  https://github.com/TheBakaRem/TouhouRPC
+Original author:   TheBakaRem
+Original license:  GNU General Public License v3.0 (see LICENSE)
+
+What was derived from TouhouRPC
+-------------------------------
+
+The following are ported from TouhouRPC and remain covered by GPL v3:
+
+  * Memory addresses for TH06-TH18 (in src/games.rs)
+  * State-machine logic for menu / stage / boss / mid-boss detection
+  * Per-stage mid-boss and boss name tables
+  * Discord application IDs used to fetch cover art from Discord's CDN
+
+What is original to this project
+--------------------------------
+
+The following are original to touhou-rpc-for-linux and are released under GPL v3
+because the project as a whole is a derivative work:
+
+  * Native Linux process detection via /proc scanning (src/process.rs)
+  * Memory reading via process_vm_readv(2) with /proc/<pid>/mem fallback
+    (src/memory.rs)
+  * A hand-rolled Discord IPC client speaking directly to the Unix domain
+    socket at $XDG_RUNTIME_DIR/discord-ipc-* (src/discord.rs), replacing
+    TouhouRPC's use of Discord's Windows-only Game SDK DLL
+  * The Rust port itself, along with all trait design, snapshot data model,
+    per-game reconnect logic, and pid-recycling guards (src/main.rs,
+    src/common.rs)
+
+Modifications
+-------------
+
+This project was created in 2026 as a native Linux port. It is not
+affiliated with or endorsed by TheBakaRem or the TouhouRPC project.
